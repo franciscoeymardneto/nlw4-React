@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/franciscoeymardneto/nlw4-React.git",
   "author": "Eymard Neto <francisco.eymard.oliveira@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.0.0"
+  }
 }
