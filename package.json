@@ -1,0 +1,8 @@
+{
+  "name": "nlw4-React",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/franciscoeymardneto/nlw4-React.git",
+  "author": "Eymard Neto <francisco.eymard.oliveira@gmail.com>",
+  "license": "MIT"
+}
