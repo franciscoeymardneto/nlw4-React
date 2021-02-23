@@ -1,7 +1,7 @@
 module.exports = {
-  roots: ['<rootDir>/pages'],
+  roots: ['<rootDir>/src'],
   collectCoverageFrom: [
-    '<rootDir>/pages/**/*.{ts,tsx}'
+    '<rootDir>/src/**/*.{ts,tsx}'
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
