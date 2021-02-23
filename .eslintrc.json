@@ -5,7 +5,6 @@
     }
   },
   "extends": [
-    "nextjs",
     "standard-with-typescript",
     "plugin:react/recommended"
   ],
