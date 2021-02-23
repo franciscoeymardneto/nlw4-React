@@ -2091,6 +2091,11 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-config-nextjs@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/eslint-config-nextjs/-/eslint-config-nextjs-1.0.7.tgz#21ea00b5062927130cd041eadd7d77ce341ebeda"
+  integrity sha512-ysuRtBxXRKAuXubS9BJWvvZ6Y2HzjgazHSixWSRjUMDtku18oMI9K7XdRAL8gKWwS6yiY1pH9Wxum0b0B3TgNw==
+
 eslint-config-standard-with-typescript@^20.0.0:
   version "20.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-standard-with-typescript/-/eslint-config-standard-with-typescript-20.0.0.tgz#0c550eca0a216cbf8da9013eb6e311acd3102d87"
