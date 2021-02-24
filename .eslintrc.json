@@ -8,7 +8,6 @@
     "standard-with-typescript",
     "plugin:react/recommended"
   ],
-  "plugins": ["react"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 6,
@@ -16,6 +15,7 @@
       "experimentalObjectRestSpread": true
     }
   },
+  "plugins": ["react"],
   "rules":{
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
