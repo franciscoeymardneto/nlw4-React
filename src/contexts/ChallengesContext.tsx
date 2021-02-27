@@ -2,8 +2,14 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import challenges from '../../challenges.json'
 
+import Cookies from 'js-cookie'
+import LevelUpModal from '../components/LevelUpModal'
+
 interface ChallengesProviderProps {
   children: ReactNode
+  level: Number
+  currentExperience: Number
+  challengesCompleted: Number
 }
 
 interface Challenge {
@@ -22,26 +28,34 @@ interface ChallengesContextData {
   levelUp: Function
   resetChallenge: Function
   completeChallenge: Function
+  closeLevelUpModal: Function
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 export const ChallengeContext = createContext({} as ChallengesContextData)
 
-const ChallengeProvider = ({ children }: ChallengesProviderProps): JSX.Element => {
-  const [level, setLevel] = useState(1)
-  const [currentExperience, setCurrentExperience] = useState(0)
-  const [challengesCompleted, setChallengesCompleted] = useState(0)
+const ChallengeProvider = ({ children, ...rest }: ChallengesProviderProps): JSX.Element => {
+  const [level, setLevel] = useState(rest.level ?? 1)
+  const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
+  const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0)
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(null)
-
-  const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
+  const experienceToNextLevel = Math.pow((level.valueOf() + 1) * 4, 2)
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     Notification.requestPermission()
   }, [])
 
+  useEffect(() => {
+    Cookies.set('level', String(level))
+    Cookies.set('currentExperience', String(currentExperience))
+    Cookies.set('challengesCompleted', String(challengesCompleted))
+  }, [level, currentExperience, challengesCompleted])
+
   const levelUp = (): void => {
-    setLevel(level + 1)
+    setLevel(level.valueOf() + 1)
+    setIsLevelUpModalOpen(true)
   }
 
   const startNewChallenge = (): void => {
@@ -64,6 +78,10 @@ const ChallengeProvider = ({ children }: ChallengesProviderProps): JSX.Element =
     setActiveChallenge(null)
   }
 
+  const closeLevelUpModal = (): void => {
+    setIsLevelUpModalOpen(false)
+  }
+
   const completeChallenge = (): void => {
     if (!activeChallenge) {
       return
@@ -71,7 +89,7 @@ const ChallengeProvider = ({ children }: ChallengesProviderProps): JSX.Element =
 
     const { amount } = activeChallenge
 
-    let finalExperience = currentExperience + amount.valueOf()
+    let finalExperience = currentExperience.valueOf() + amount.valueOf()
 
     if (finalExperience >= experienceToNextLevel) {
       finalExperience -= experienceToNextLevel
@@ -80,7 +98,7 @@ const ChallengeProvider = ({ children }: ChallengesProviderProps): JSX.Element =
 
     setCurrentExperience(finalExperience)
     setActiveChallenge(null)
-    setChallengesCompleted(challengesCompleted + 1)
+    setChallengesCompleted(challengesCompleted.valueOf() + 1)
   }
   return (
     <ChallengeContext.Provider
@@ -94,11 +112,15 @@ const ChallengeProvider = ({ children }: ChallengesProviderProps): JSX.Element =
         startNewChallenge,
         resetChallenge,
         levelUp,
-        completeChallenge
+        completeChallenge,
+        closeLevelUpModal
       }
       }
     >
       {children}
+
+      { isLevelUpModalOpen && <LevelUpModal/>}
+
     </ChallengeContext.Provider>
   )
 }
